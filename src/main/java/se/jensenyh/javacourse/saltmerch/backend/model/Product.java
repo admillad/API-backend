@@ -35,7 +35,7 @@ public class Product implements Serializable {
         this.colorVariants = colorVariants;
     }
 
-    //Fattade inte riktigt den 2:a constructorn.
+    //Fattade inte riktigt den 2:a constructor.
     // todo: needs 3 constructors:
     //  1. empty constructor: this one only initializes colorVariants to new ArrayList<>()
     //  2. constructor with id, category, title, description, and previewImage: this one initializes colorVariants to new ArrayList<>()

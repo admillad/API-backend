@@ -10,10 +10,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
 import se.jensenyh.javacourse.saltmerch.backend.model.ColorVariant;
 import se.jensenyh.javacourse.saltmerch.backend.model.Product;
 import se.jensenyh.javacourse.saltmerch.backend.model.SizeContainer;
-
+@Repository
 public class ProductRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -187,7 +188,8 @@ public class ProductRepository {
             colorVariant.colorName = variantWImages.colorName;
             colorVariant.sizes = (ArrayList<SizeContainer>) getVariantSizes(variantWImages.id);
             try {
-                colorVariant.setImagesFromCSV(variantWImages.imagesCsv);
+               // colorVariant.setImagesFromCSV(variantWImages.imagesCsv);
+                //måste fråga hur dem andra löste det.
             } catch (Exception e) {
                 colorVariant.images = new ArrayList<>();
                 System.out.println("Exception parsing images from csv; see stack trace");

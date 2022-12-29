@@ -17,10 +17,10 @@ public class CartItem {
     public int quantity;
 
 
-    public CartItem(int product_id, String title, String color, String size, String preview_image, int quantity) {
+    public CartItem() {
     }
 
-    public CartItem(product_id, title, color, size, preview_image) {
+    public CartItem(int product_id, String title, String color, String size, String preview_image) {
         this.product_id = product_id;
         this.title = title;
         this.color = color;
@@ -28,7 +28,7 @@ public class CartItem {
         this.preview_image = preview_image;
     }
 
-    public CartItem(product_id, title, color, size, preview_image, quantity) {
+    public CartItem(int product_id, String title, String color, String size, String preview_image, int quantity) {
         this.product_id = product_id;
         this.title = title;
         this.color = color;
@@ -36,5 +36,6 @@ public class CartItem {
         this.preview_image = preview_image;
         this.quantity = quantity;
     }
+
 
 }

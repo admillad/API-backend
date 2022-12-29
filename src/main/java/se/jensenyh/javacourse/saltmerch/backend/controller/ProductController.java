@@ -30,15 +30,13 @@ public class ProductController {
     public void UpdateProduct() {
 
     }
-    //@PostMapping ("/products/{id}/variant")
-    //public void newVariant() {}
 
     @PostMapping("/products/{id}/variants")
     public void newVariant() {
 
     }
 
-    @PutMapping("/products/{id}/variants/stock?size={size}&color={green}&quantity={quan tity}")
+    @PutMapping("/products/{id}/variants/stock?size={size}&color={green}&quantity={quantity}")
     public void restockSize() {
 
     }
