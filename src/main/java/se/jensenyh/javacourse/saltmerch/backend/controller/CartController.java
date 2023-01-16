@@ -1,6 +1,7 @@
 package se.jensenyh.javacourse.saltmerch.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.jensenyh.javacourse.saltmerch.backend.model.CartItem;
 import se.jensenyh.javacourse.saltmerch.backend.service.CartService;
@@ -8,35 +9,57 @@ import se.jensenyh.javacourse.saltmerch.backend.service.CartService;
 import java.util.List;
 
 @CrossOrigin("http://localhost:3010")
+@RequestMapping("/carts")
 @RestController
 public class CartController {
     @Autowired
     CartService cartService;
 
-    @GetMapping ("/carts/{id}")
-    public List<CartItem> getCartContent(){
-        return cartService.getCartItems();
+    @GetMapping("/{id}")
+    public Object getCartItems(@PathVariable("id") Integer id) {
+        return cartService.getCartItems(id);
 
     }
 
-    @PatchMapping("/carts/{id}?action=add")
-    public void addProductToCart() {
+    @PatchMapping({"/{id}?action=add"})
+    public ResponseEntity addCartItem(@PathVariable("id") Integer id,
+                                      @RequestBody CartItem item,
+                                      @RequestParam(value = "action") String add) {
+        int res = cartService.addingCartItem(id, item, add);
+        switch (res) {
+            case 1:
+                return ResponseEntity.ok().build();
+            case -2:
+                return ResponseEntity.badRequest().body("No product with that id exist");
+            case -3:
+                return ResponseEntity.badRequest().body("The item is not in stock");
+            default:ResponseEntity.internalServerError().body("Server error");
+        }
 
 
     }
 
-    @PatchMapping("/carts/{id}?action=remove")
-    public void removeProductFromCart() {
+    @PatchMapping({"/{id}?action=remove"})
+    public ResponseEntity removeCartItem(@PathVariable("id") Integer id,
+                                                 @RequestBody CartItem cartItem,
+                                                 @RequestParam String action) {
 
     }
 
-    @DeleteMapping("/carts/{id}")
-    public void clearCart() {
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> clearCart(@PathVariable("id") Integer id) {
+        if (cartService.clearCartAndUpdateIfBoolTrue() >= 0)
+            return ResponseEntity.ok().build();
+        return ResponseEntity.internalServerError().build();
 
     }
 
-    @DeleteMapping("/carts/{id}?buyout=true")
-    public void clearCartAndRestock() {
-    }
+    @DeleteMapping("/{id}?buyout=true")
+    public ResponseEntity<Object> clearCart(@PathVariable("id") Integer id, boolean buyout) {
+        if (cartService.clearCartAndUpdateIfBoolTrue() >= 0)
+            return ResponseEntity.ok().build();
+        return ResponseEntity.internalServerError().build();
 
+    }
 }

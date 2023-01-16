@@ -1,13 +1,20 @@
 package se.jensenyh.javacourse.saltmerch.backend.controller;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import se.jensenyh.javacourse.saltmerch.backend.model.Product;
+import se.jensenyh.javacourse.saltmerch.backend.service.ProductService;
 
 @CrossOrigin("http://localhost:3010")
 @RestController
 public class ProductController {
+    @Autowired
+    ProductService productService;
+
     @GetMapping("/products")
-    public void getAllProducts() {
+    public void getAllProducts(@RequestBody Product product) {
+        productService.GetAllProducts();
 
     }
 
