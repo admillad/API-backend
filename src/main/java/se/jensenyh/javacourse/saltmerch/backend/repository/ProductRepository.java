@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import se.jensenyh.javacourse.saltmerch.backend.model.ColorVariant;
 import se.jensenyh.javacourse.saltmerch.backend.model.Product;
 import se.jensenyh.javacourse.saltmerch.backend.model.SizeContainer;
+
 @Repository
 public class ProductRepository {
     @Autowired
@@ -47,7 +48,7 @@ public class ProductRepository {
 
         // NOTE: have in mind that the column name that corresponds to previewImage is preview_image
         RowMapper<Product> rm = (rs, rowNum) -> new Product(
-                rs.getInt("product_id"),
+                rs.getInt("id"),
                 rs.getString("category"),
                 rs.getString("title"),
                 rs.getString("description"),
@@ -81,17 +82,17 @@ public class ProductRepository {
                 VALUES (?, ?, ?, ?) RETURNING id;""";
         RowMapper<Integer> rm = (rs, rowNum) -> rs.getInt("id");
         List<Integer> pids = jdbcTemplate.query(sql, rm, category, prod.title,
-                prod.description, prod.preview_image);
+                prod.description, prod.previewImage);
         int pid = pids.size() > 0 ? pids.get(0) : -1;
 
         Product newProd = null;
         if (pid > -1) {
             newProd = new Product();
-            newProd.product_id = pid;
+            newProd.id = pid;
             newProd.category = category;
             newProd.title = prod.title;
             newProd.description = prod.description;
-            newProd.preview_image = prod.preview_image;
+            newProd.previewImage = prod.previewImage;
 
             for (ColorVariant v : prod.colorVariants) {
                 ColorVariant newv = new ColorVariant();
@@ -140,8 +141,8 @@ public class ProductRepository {
                     ? prod.title : oldProd.title;
             String desc = prod.description != null && !prod.description.isEmpty()
                     ? prod.description : oldProd.description;
-            String img = prod.preview_image != null && !prod.preview_image.isEmpty()
-                    ? prod.preview_image : oldProd.preview_image;
+            String img = prod.previewImage != null && !prod.previewImage.isEmpty()
+                    ? prod.previewImage : oldProd.previewImage;
             var sql = """
                     UPDATE products
                     SET title = ?, description = ?, preview_image = ?
@@ -188,7 +189,7 @@ public class ProductRepository {
             colorVariant.colorName = variantWImages.colorName;
             colorVariant.sizes = (ArrayList<SizeContainer>) getVariantSizes(variantWImages.id);
             try {
-               // colorVariant.setImagesFromCSV(variantWImages.imagesCsv);
+                // colorVariant.setImagesFromCSV(variantWImages.imagesCsv);
                 //måste fråga hur dem andra löste det.
             } catch (Exception e) {
                 colorVariant.images = new ArrayList<>();

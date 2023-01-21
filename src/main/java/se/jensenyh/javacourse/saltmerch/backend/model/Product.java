@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Product implements Serializable {
     @JsonProperty
-    public int product_id;
+    public int id;
     @JsonProperty
     public String category;
     @JsonProperty
@@ -15,7 +15,7 @@ public class Product implements Serializable {
     @JsonProperty
     public String description;
     @JsonProperty
-    public String preview_image;
+    public String previewImage;
     @JsonProperty
     public ArrayList<ColorVariant> colorVariants;
 
@@ -23,23 +23,20 @@ public class Product implements Serializable {
         this.colorVariants = new ArrayList<>();
     }
 
-    public Product(int product_id, String category, String title, String description, String preview_image) {
+    public Product(int id, String category, String title, String description, String previewImage) {
+        this.id = id;
+        this.category = category;
+        this.title = title;
+        this.previewImage = previewImage;
+        this.description = description;
         this.colorVariants = new ArrayList<>();
     }
 
-    public Product(int product_id, String category, String title, String description, ArrayList<ColorVariant> colorVariants) {
-        this.product_id = product_id;
+    public Product(int id, String category, String title, String description, ArrayList<ColorVariant> colorVariants) {
+        this.id = id;
         this.category = category;
         this.title = title;
         this.description = description;
         this.colorVariants = colorVariants;
     }
-
-    //Fattade inte riktigt den 2:a constructor.
-    // todo: needs 3 constructors:
-    //  1. empty constructor: this one only initializes colorVariants to new ArrayList<>()
-    //  2. constructor with id, category, title, description, and previewImage: this one initializes colorVariants to new ArrayList<>()
-    //  3. constructor with id, category, title, description, colorVariants
-
-
 }

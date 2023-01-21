@@ -15,5 +15,4 @@ public class SizeContainer {
         this.size = size;
         this.stock = stock;
     }
-
 }

@@ -12,21 +12,16 @@ public class CartService {
     @Autowired
     CartRepository cr;
 
-    public List<CartItem> getCartItems(int id) {
-        if (cr.selectAllItems() == null || cr.selectAllItems().isEmpty()) {
-            throw new IllegalStateException("no Items in your cart");
-        } else
-            return cr.selectAllItems();
+    public List<CartItem> getCartItems(CartItem item) {
+        return cr.selectAllItems();
     }
 
     public int updateCart(CartItem item, String actionToExecute) {
         if (actionToExecute.equalsIgnoreCase("add")) {
             return cr.insertOrIncrementItem(item);
-        }
-        if (actionToExecute.equalsIgnoreCase("remove")) {
+        } else if (actionToExecute.equalsIgnoreCase("remove")) {
             return cr.deleteOrDecrementItem(item);
         } else return -3;
-
     }
 
     public int deleteCart(boolean buyout) {

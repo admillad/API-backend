@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import se.jensenyh.javacourse.saltmerch.backend.model.CartItem;
+
 @Repository
 public class CartRepository {
     @Autowired
@@ -19,7 +20,7 @@ public class CartRepository {
 
     public List<CartItem> selectAllItems() {
 
-        var sql = "SELECT *";
+        var sql = "SELECT * FROM cart_items";
 
 
         // NOTE: you can leave everything else here as it is
@@ -51,7 +52,7 @@ public class CartRepository {
                     WHERE product_id = (:pid) AND color_name = (:color) AND size = (:size));
                 """;
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("pid", item.product_id);
+        paramMap.put("pid", item.productId);
         paramMap.put("size", item.size);
         paramMap.put("color", item.color);
 
@@ -65,7 +66,7 @@ public class CartRepository {
                     VALUES ((:pid), (:title), (:color), (:size), 1, (:img));
                     """ + lowerStockSql;
             paramMap.put("title", item.title);
-            paramMap.put("img", item.preview_image);
+            paramMap.put("img", item.previewImage);
         } else if (curQty == 0)
             return -2; // edge case, item in cart has qty 0
         else {
@@ -97,7 +98,7 @@ public class CartRepository {
                     WHERE product_id = (:pid) AND color_name = (:color) AND size = (:size));
                 """;
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("pid", item.product_id);
+        paramMap.put("pid", item.productId);
         paramMap.put("size", item.size);
         paramMap.put("color", item.color);
 
@@ -146,7 +147,7 @@ public class CartRepository {
                     	WHERE product_id = (:pid) AND size = (:size) AND color_name = (:color));
                     """ : "");
             Map<String, Object> paramMap = new HashMap<>();
-            paramMap.put("pid", item.product_id);
+            paramMap.put("pid", item.productId);
             paramMap.put("size", item.size);
             paramMap.put("color", item.color);
             paramMap.put("qty", item.quantity);
@@ -163,7 +164,7 @@ public class CartRepository {
                 FROM cart_items
                 WHERE product_id = ? AND color = ? AND size = ?
                 """;
-        List<Integer> quantityList = jdbcTemplate.query(sql, rm, item.product_id,
+        List<Integer> quantityList = jdbcTemplate.query(sql, rm, item.productId,
                 item.color, item.size);
         return quantityList.size() > 0 ? quantityList.get(0) : -10;
     }
