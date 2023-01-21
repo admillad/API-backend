@@ -43,10 +43,6 @@ public class ProductController {
     @GetMapping("/{id}")
     public Object getProduct(@PathVariable("id") Integer id) {
         return productService.getProductById(id);
-        // funkar inte
-        //The method works, but it will not send a Json.
-        // Something in my constructor is probably wrong
-
     }
 
     @PutMapping("/{id}")
@@ -58,32 +54,5 @@ public class ProductController {
             default -> ResponseEntity.internalServerError().body("sorry, server error");
         };
     }
-
-
-    @DeleteMapping("/{id}")
-    public void deleteProduct() {
-
-    }
-
-    @DeleteMapping("/{productId}/variants/{variantId}")
-    public void deleteVarietyProducts() {
-
-    }
-    // wanted to make a switch out of all the categories endpoints, but did not succeed.
-
-    //@GetMapping("/{categories}")
-    // public Object getAllProductsInCategory(@PathVariable String categories) {
-    // switch (categories) {
-    //      case "hats":
-    //           return productService.getProductByCategory("hats");
-    //       case "jackets":
-    //           return productService.getProductByCategory("jackets");
-    //       case "tshirts":
-    //           return productService.getProductByCategory("tshirts");
-    //       case "bags":
-    //           return productService.getProductByCategory("bags");
-    //   }
-    //   return ResponseEntity.internalServerError().body("Server error, sorry!");
-    //}
 }
 

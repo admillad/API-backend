@@ -4,6 +4,7 @@ import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpStatusCodeException;
 import se.jensenyh.javacourse.saltmerch.backend.model.CartItem;
 import se.jensenyh.javacourse.saltmerch.backend.service.CartService;
 
@@ -16,10 +17,17 @@ public class CartController {
     CartService cartService;
 
     @GetMapping("/{id}")
-    public Object getCartItems(@PathVariable("id") Integer id,
-                               @RequestBody CartItem item) {
-        return cartService.getCartItems(item);
-    }//todo: make a 400 bad request line.
+    public ResponseEntity<Object> getCartItems(@PathVariable("id") Integer id,
+                                               @RequestBody CartItem item) {
+        if (id == 1) {
+            try {
+                cartService.getCartItems(item);
+            } catch (HttpStatusCodeException e) {
+                ResponseEntity.badRequest().body("The Cart is empty, try again.");
+            }
+        }
+        return ResponseEntity.internalServerError().body("Wrong id number, the id is suppose to be:1. Please try again");
+    }
 
     @PatchMapping("/{id}")
     public ResponseEntity<Object> addToOrRemoveFromCart(@PathVariable Integer id,
