@@ -12,7 +12,7 @@ public class CartService {
     @Autowired
     CartRepository cr;
 
-    public List<CartItem> getCartItems(CartItem item) {
+    public List<CartItem> getCartItems() {
         return cr.selectAllItems();
     }
 

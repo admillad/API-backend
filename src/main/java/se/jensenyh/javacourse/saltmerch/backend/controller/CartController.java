@@ -17,16 +17,8 @@ public class CartController {
     CartService cartService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getCartItems(@PathVariable("id") Integer id,
-                                               @RequestBody CartItem item) {
-        if (id == 1) {
-            try {
-                cartService.getCartItems(item);
-            } catch (HttpStatusCodeException e) {
-                ResponseEntity.badRequest().body("The Cart is empty, try again.");
-            }
-        }
-        return ResponseEntity.internalServerError().body("Wrong id number, the id is suppose to be:1. Please try again");
+    public Object getCartItems(){
+            return cartService.getCartItems();
     }
 
     @PatchMapping("/{id}")

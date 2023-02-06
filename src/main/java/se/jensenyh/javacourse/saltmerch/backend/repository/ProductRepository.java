@@ -150,24 +150,19 @@ public class ProductRepository {
             return jdbcTemplate.update(sql, title, desc, img, id);
         }
     }
-
-    // todo: this method needs you to write its SQL query and execute it
-    // NOTE: optional
-
     /**
      * Deletes a specific row from the products table.
      */
     public int deleteProduct(int id) {
-        // todo: write the SQL query for deleting a single product
-        //osäker på om det är rätt, fråga om hjälp.
+
+
         var sql = """
                 DELETE FROM Product
-                WHERE product_id = ?
-                """;// <<<< todo: WRITE SQL QUERY HERE
+                WHERE id = ?
+                """;
 
 
-        // todo: execute the query while also passing the id as a parameter
-        return -1000;// <<<< todo: call jdbcTemplate method here
+        return jdbcTemplate.update(sql, id);
     }
 
     // NOTE: NO NEED TO MODIFY THIS METHOD!
@@ -284,15 +279,11 @@ public class ProductRepository {
     /**
      * Delete a specific row from variants.
      */
-    public int deleteVariant(int product_id, String color) {
-        // todo: write the SQL query for deleting a variant
-        //  with specific product_id and color_name
-        //vet inte säkert, kolla med någon annan.
+    public int deleteVariant(int productId, String color) {
+
         var sql = "DElETE FROM variants WHERE product_id = (:pid) AND color = (:color)";
 
-
-        // todo: execute the query while also passing the id as a parameter
-        return -1000;// <<<< todo: call jdbcTemplate method here
+        return jdbcTemplate.update(sql, productId, color);
     }
 
     // NOTE: the endpoint that's supposed to use this method is OPTIONAL!
