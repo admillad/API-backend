@@ -1,6 +1,5 @@
 spring:
   datasource:
-    container_name: database
     url: jdbc:postgresql://localhost:5432/saltmerch
     name: saltmerch
     username: jensenyh

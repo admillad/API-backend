@@ -12,28 +12,26 @@ import org.springframework.http.ResponseEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class IntegrationTest
-{
+public class IntegrationTest {
     @LocalServerPort
     private int urlPort;
 
     @Autowired
     private TestRestTemplate restTemplate;
-    private String BaseUrl()
-    {
+
+    private String BaseUrl() {
         return "http://localhost:" + urlPort + "/api/v1/";
     }
 
     @org.junit.jupiter.api.Test
-    public void GetAllProducts() throws Exception
-    {
+    public void GetAllProducts() throws Exception {
         ResponseEntity<String> res = restTemplate.getForEntity(BaseUrl() + "products", String.class);
 
         assertThat(res.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
+
     @org.junit.jupiter.api.Test
-    public void WhenGetCartItemsEqualsNull_HttpResponseIs400() throws Exception
-    {
+    public void WhenGetCartItemsEqualsNull_HttpResponseIs400() throws Exception {
         ResponseEntity<String> res = restTemplate.getForEntity(BaseUrl() + "carts/1", String.class);
 
         assertThat(res.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
